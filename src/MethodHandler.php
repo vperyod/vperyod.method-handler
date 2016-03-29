@@ -82,7 +82,7 @@ class MethodHandler
      *
      * @param Request $request PSR7 HTTP Request
      *
-     * @return null | $string
+     * @return $string|null
      *
      * @access protected
      */
