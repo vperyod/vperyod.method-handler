@@ -57,7 +57,7 @@ class MethodHandler
             return $next($request, $response);
         }
 
-        $request = $request->withMethod($method);
+        $request = $this->withMethod($request, $method);
         return $next($request, $response);
     }
 
@@ -99,5 +99,29 @@ class MethodHandler
         if ($method = $request->getHeaderLine($header)) {
             return $method;
         }
+    }
+
+    /**
+     * WithMethod
+     *
+     * @param Request $request DESCRIPTION
+     * @param mixed   $method  DESCRIPTION
+     *
+     * @return Request
+     *
+     * @access protected
+     */
+    protected function withMethod(Request $request, $method)
+    {
+        $request = $request->withMethod($method);
+        $body = $request->getParsedBody();
+        $param = $this->getMethodOverrideParam();
+
+        if (isset($body[$param])) {
+            unset($body[$param]);
+            $request = $request->withParsedBody($body);
+        }
+
+        return $request;
     }
 }
