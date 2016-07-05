@@ -55,7 +55,7 @@ class MethodOverrideHelper
      */
     public function __invoke($method = null)
     {
-        if ($method) {
+        if ($method !== null) {
             $this->setMethod($method);
         }
         return $this;
